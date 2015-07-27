@@ -4,5 +4,5 @@
 
 ## Install
 
-   $npm install -g web-debug
-   $web-debug 8080
+    $npm install -g web-debug
+    $web-debug 8080
