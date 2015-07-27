@@ -281,7 +281,6 @@ function writeFile(fileName, content) {
     });
 }
 
-<<<<<<< HEAD
 function getIPAdress(){
     var interfaces = require('os').networkInterfaces();
     for(var devName in interfaces){
@@ -295,8 +294,6 @@ function getIPAdress(){
     }
 }
 
-=======
->>>>>>> 851aa0839111465f28d66e82510a3765811eea4b
 function readFile(filename, response, request) {
     if (path.extname(filename) == '.wjs') {
         exec(filename, response, request);
@@ -316,11 +313,7 @@ function readFile(filename, response, request) {
             });
             if (path.extname(filename) != '.wjs') {
                 if (fileType == 'text/html') {
-<<<<<<< HEAD
                     file = file.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="//' + getIPAdress() + ':8232/livereload.js"></script>\r\n</body>');
-=======
-                    file = file.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="http://127.0.0.1:8132/livereload.js"></script>\r\n</body>');
->>>>>>> 851aa0839111465f28d66e82510a3765811eea4b
                 }
                 response.end(file);
                 file = null;
@@ -382,11 +375,7 @@ function watch() {
 
 function setLiveLoad() {
     var LiveReloadServer = require('./livereload-server-spec');
-<<<<<<< HEAD
     var port = 8232;
-=======
-    var port = 8132;
->>>>>>> 851aa0839111465f28d66e82510a3765811eea4b
     LRServer = new LiveReloadServer({
         id: 'livereload',
         name: 'web-debug-reload',
@@ -552,11 +541,7 @@ function createServer() {
     }).listen(PORT);
 
     setTimeout(function() {
-<<<<<<< HEAD
         console.log('Server running at http://127.0.0.1:' + PORT + ', the webroot is: ' + ROOT_PATH);
-=======
-        console.log('Server running at http://localhost:' + PORT + ', the webroot is: ' + ROOT_PATH);
->>>>>>> 851aa0839111465f28d66e82510a3765811eea4b
     }, 1000);
 }
 

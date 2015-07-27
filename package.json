@@ -1,10 +1,6 @@
 {
   "name": "web-debug",
-<<<<<<< HEAD
   "version": "1.0.2",
-=======
-  "version": "1.0.1",
->>>>>>> 851aa0839111465f28d66e82510a3765811eea4b
   "description": "A static web server with liveload for web develop",
   "main": "index.js",
   "bin": {
@@ -39,13 +35,8 @@
   },
   "homepage": "https://github.com/lwdgit/web-debug#readme",
   "gitHead": "ec85133e54e3608e0539d6b764b7aaf6cc3d1c55",
-<<<<<<< HEAD
-  "_id": "web-debug@1.0.1",
-  "_shasum": "abe88d250a7126fa759dc7f1f086a09e230ae95c",
-=======
-  "_id": "web-debug@1.0.0",
-  "_shasum": "8acb8c95b868caaa1e1ae71180013262598b72fd",
->>>>>>> 851aa0839111465f28d66e82510a3765811eea4b
+  "_id": "web-debug@1.0.2",
+  "_shasum": "f53b526b65f772640ef8fa671f7ad68b1566c053",
   "_from": "web-debug@*",
   "_npmVersion": "2.11.1",
   "_nodeVersion": "0.12.4",
