@@ -1,0 +1,60 @@
+{
+  "name": "web-debug",
+  "version": "1.0.2",
+  "description": "A static web server with liveload for web develop",
+  "main": "index.js",
+  "bin": {
+    "web-debug": "index.js"
+  },
+  "dependencies": {
+    "chokidar": "^1.0.3",
+    "debug": "~0.7.0",
+    "websocket.io-spec": "~0.2.1",
+    "livereload-protocol": "~0.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lwdgit/web-debug.git"
+  },
+  "keywords": [
+    "web",
+    "debug",
+    "http",
+    "server"
+  ],
+  "author": {
+    "name": "lwdgit"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lwdgit/web-debug/issues"
+  },
+  "homepage": "https://github.com/lwdgit/web-debug#readme",
+  "gitHead": "ec85133e54e3608e0539d6b764b7aaf6cc3d1c55",
+  "_id": "web-debug@1.0.1",
+  "_shasum": "abe88d250a7126fa759dc7f1f086a09e230ae95c",
+  "_from": "web-debug@*",
+  "_npmVersion": "2.11.1",
+  "_nodeVersion": "0.12.4",
+  "_npmUser": {
+    "name": "lwdgit",
+    "email": "1127622940@qq.com"
+  },
+  "dist": {
+    "shasum": "8acb8c95b868caaa1e1ae71180013262598b72fd",
+    "tarball": "http://registry.npmjs.org/web-debug/-/web-debug-1.0.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "lwdgit",
+      "email": "1127622940@qq.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/web-debug/-/web-debug-1.0.0.tgz",
+  "readme": "ERROR: No README data found!"
+}
