@@ -5,4 +5,13 @@
 ## Install
 
     $npm install -g web-debug
-    $web-debug 8080
+
+## Start
+    $web-debug 8080 ./dist
+    
+    
+    
+## Tips:
+
+> `ctrl + shift + z` can toggle the qrcode image
+    

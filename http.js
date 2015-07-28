@@ -386,7 +386,7 @@ function setLiveLoad() {
         }
     });
     LRServer.on('livereload.js', function(req, res) {
-        var script = fs.readFileSync(SERVER_PATH + 'vendor/livereload.js');
+        var script = fs.readFileSync(SERVER_PATH + 'vendor/livereload.min.js');
         res.writeHead(200, {
             'Content-Length': script.length,
             'Content-Type': 'text/javascript',
@@ -576,7 +576,7 @@ function start() {
         });
     });
 }
-
+/*
 process.on('uncaughtException', function(err) {
     if (err.toString().indexOf('EADDRINUSE') > -1) {
         console.error('Port ' + PORT + ' in use!');
@@ -585,7 +585,7 @@ process.on('uncaughtException', function(err) {
     }
     rmFile('.pidTmp');
     process.exit();
-});
+});*/
 
 exports.run = start;
 
