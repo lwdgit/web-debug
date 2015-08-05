@@ -69,13 +69,13 @@
             return request.on('end', function() {
               var url;
               url = Url.parse(request.url, true);
-              if (url.pathname === '/livereload.js') {
-                return _this.emit('livereload.js', request, response);
-              } else if (url.pathname === '/debuggap.js') {
-                return _this.emit('debuggap.js', request, response);
-              } else {
+              if (url.pathname === '/livereload.js' || url.pathname === '/debuggap.min.js') {
+                return _this.emit('*', url.pathname, response);
+              }/* else if (url.pathname === '/debuggap.js') {
+                return _this.emit('debuggap.js', url.pathname, response);
+              }*/ /*else {
                 return _this.emit('httprequest', url, request, response);
-              }
+              }*/
             });
           });
           _this.wsserver = wsio.attach(_this.httpServer);
