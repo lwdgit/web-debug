@@ -1,6 +1,6 @@
 #web-debug
 
-> A static web server with liveload for web develop
+> A static web server with liveload and debuggap for mobile web develop
 
 ## Install
 
