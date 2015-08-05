@@ -10,7 +10,7 @@ var sys = require('sys'),
     PORT = process.argv[2] || 80,
     SERVER_PATH = process.mainModule.filename.match(/.*[\\\/]/)[0];
 
-var isWin = process.env.OS.toLowerCase().indexOf('windows') > -1 ? true : false;
+var isWin = process.env.OS && process.env.OS.toLowerCase().indexOf('windows') > -1 ? true : false;
 
 var mime = {
     lookupExtension: function(ext, fallback) {
@@ -313,7 +313,7 @@ function readFile(filename, response, request) {
             });
             if (path.extname(filename) != '.wjs') {
                 if (fileType == 'text/html') {
-                    file = file.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="//' + getIPAdress() + ':8232/livereload.js"></script>\r\n</body>');
+                    file = file.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="//' + getIPAdress() + ':8232/livereload.js"></script><script type="text/javascript" charset="utf-8" src="//' + getIPAdress() + ':8232/debuggap.js"></script>\r\n</body>');
                 }
                 response.end(file);
                 file = null;
@@ -387,6 +387,15 @@ function setLiveLoad() {
     });
     LRServer.on('livereload.js', function(req, res) {
         var script = fs.readFileSync(SERVER_PATH + 'vendor/livereload.min.js');
+        res.writeHead(200, {
+            'Content-Length': script.length,
+            'Content-Type': 'text/javascript',
+            'Connection': 'close'
+        });
+        res.end(script);
+    });
+    LRServer.on('debuggap.js', function(req, res) {
+        var script = fs.readFileSync(SERVER_PATH + 'vendor/debuggap.js');
         res.writeHead(200, {
             'Content-Length': script.length,
             'Content-Type': 'text/javascript',
