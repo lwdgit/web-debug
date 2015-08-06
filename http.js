@@ -390,6 +390,7 @@ function setLiveLoad() {
         res.writeHead(200, {
             'Content-Length': script.length,
             'Content-Type': 'text/javascript',
+            'Cache-Control': 'no-cache',
             'Connection': 'close'
         });
         res.end(script);

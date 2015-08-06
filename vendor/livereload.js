@@ -2330,6 +2330,8 @@ var QRCode;
           var script = document.createElement('script');
           script.src = '//' + ip + ':8232/debuggap.min.js';
           document.querySelector('body').appendChild(script); 
+          localStorage.setItem('host', ip);
+          localStorage.setItem('port', 1111);
         }
     }
     addDebugGap();

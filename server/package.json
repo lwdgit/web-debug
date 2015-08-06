@@ -1,0 +1,13 @@
+{
+"name":"DebugGap",
+"main":"source/index.html",
+"version":"3.0.0",
+"window":{
+	"title":"DebugGap",
+	"toolbar":false,
+	"min_width": 1000,
+	"min_height": 600,
+	"icon":"source/css/images/icon.png",
+	"resizable":true
+}
+}
