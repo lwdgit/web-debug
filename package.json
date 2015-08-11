@@ -1,6 +1,6 @@
 {
   "name": "web-debug",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A static web server with liveload for web develop",
   "main": "index.js",
   "bin": {
@@ -34,27 +34,5 @@
     "url": "https://github.com/lwdgit/web-debug/issues"
   },
   "homepage": "https://github.com/lwdgit/web-debug#readme",
-  "gitHead": "ec85133e54e3608e0539d6b764b7aaf6cc3d1c55",
-  "_id": "web-debug@1.0.2",
-  "_shasum": "f53b526b65f772640ef8fa671f7ad68b1566c053",
-  "_from": "web-debug@*",
-  "_npmVersion": "2.11.1",
-  "_nodeVersion": "0.12.4",
-  "_npmUser": {
-    "name": "lwdgit",
-    "email": "1127622940@qq.com"
-  },
-  "dist": {
-    "shasum": "8acb8c95b868caaa1e1ae71180013262598b72fd",
-    "tarball": "http://registry.npmjs.org/web-debug/-/web-debug-1.0.0.tgz"
-  },
-  "maintainers": [
-    {
-      "name": "lwdgit",
-      "email": "1127622940@qq.com"
-    }
-  ],
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/web-debug/-/web-debug-1.0.0.tgz",
-  "readme": "ERROR: No README data found!"
+  "preferGlobal": true
 }

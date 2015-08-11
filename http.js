@@ -586,7 +586,7 @@ function start() {
         });
     });
 }
-/*
+
 process.on('uncaughtException', function(err) {
     if (err.toString().indexOf('EADDRINUSE') > -1) {
         console.error('Port ' + PORT + ' in use!');
@@ -595,7 +595,7 @@ process.on('uncaughtException', function(err) {
     }
     rmFile('.pidTmp');
     process.exit();
-});*/
+});
 
 exports.run = start;
 
