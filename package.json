@@ -1,8 +1,9 @@
 {
   "name": "web-debug",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A static web server with liveload for web develop",
   "main": "index.js",
+  "preferGlobal": true,
   "bin": {
     "web-debug": "index.js"
   },
@@ -33,6 +34,5 @@
   "bugs": {
     "url": "https://github.com/lwdgit/web-debug/issues"
   },
-  "homepage": "https://github.com/lwdgit/web-debug#readme",
-  "preferGlobal": true
+  "homepage": "https://github.com/lwdgit/web-debug#readme"
 }
