@@ -326,14 +326,14 @@ function readFile(filename, response, request) {
 
 var LRServer, LRTimer;
 
-function reload() {
+function reload(path) {
     if (LRServer && LRServer.connections) {
         for (var prop in LRServer.connections) {
             var connection = LRServer.connections[prop];
             try {
                 connection.send({
                     command: 'reload',
-                    path: '*',
+                    path: path,
                     liveCSS: true
                 });
             } catch (e) {
@@ -352,9 +352,7 @@ function watch() {
     var safePathReg = /[\\\/][_\-.\s\w]+$/i;
 
     function listener(type) {
-        return function() {
-            LRTimer = setTimeout(reload, 200);
-        };
+        return reload;
     }
 
     require('chokidar')
