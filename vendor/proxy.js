@@ -22,16 +22,29 @@ var proxy = http.createServer(function(request, response) {
 
     var options = {
         host: '127.0.0.1', // 这里是代理服务器       
-        port: 8081, // 这里是代理服务器端口 
+        port: 80, // 这里是代理服务器端口 
         path: url.parse(request.url).pathname,       
         method: request.method,
         headers: request.headers     
     };
 
-    console.log(options)
-    var req = http.request(options, function(req, res) {
+    var type = '';
+    var body = '';
+    //console.log(options)
+    http.request(options, function(req) {
+        type = req.headers['content-type'];
+        
+        req.on('data', function(chunk) {
+          body += chunk;
+        }).on('end', function() {
+            if (type.indexOf('htm') > -1) {
+              //console.log(req);
+              
+            }
+            body = null;
+        });
     	//console.log(arguments[0].req.pipe)
-        req.pipe(response); // 这个pipe很喜欢
+        req.pipe(response); 
         //console.log(req.url);
     }).end();
-}).listen(8080);
+}).listen(8000);
