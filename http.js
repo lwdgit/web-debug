@@ -10,7 +10,7 @@ var sys = require('sys'),
     PORT = process.argv[2] || 80,
     SERVER_PATH = process.mainModule.filename.match(/.*[\\\/]/)[0];
 
-var isWin = process.env.OS && process.env.OS.toLowerCase().indexOf('windows') > -1 ? true : false;
+var isWin = process.platform.toLowerCase().indexOf('win') > -1 ? true : false;
 
 var mime = {
     lookupExtension: function(ext, fallback) {
