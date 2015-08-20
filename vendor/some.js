@@ -32,7 +32,7 @@ function push(options){
 function clear(){
     intercept_rules=[];
 }
-push({host:"dos.com",path:"http://s.com/a",body:"is from /a",headers:{Server:"notNginx"}});
+push({host:"www.haosou.com",path:"http://www.haosou.com/?src=so.com",body:"is from /a",headers:{Server:"notNginx"}});
 //在本地创建一个server监听本地local_port端口
 net.createServer(function(client) {
     //首先监听浏览器的数据发送事件，直到收到的数据包含完整的http请求头
