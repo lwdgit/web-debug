@@ -1,50 +1,92 @@
+'use strict';
 var http = require('http');
 var url = require('url');
-//var requestm = require('request');
+
 
 
 var proxy = http.createServer(function(request, response) {
 
-    /*var options = {
-        url: request.url.substring(1),
-        headers: request.headers
-    };
-
-    /*console.log(url.parse(request.url.substring(1)));
-    requestm(request.url.substring(1), function(error, res, body) {
-        if (!error && response.statusCode == 200) {
-            //console.log(body); // Show the HTML for the Google homepage.
-            response.writeHead(200, res.header);
-            response.end(res.body);
-        }
-    });*/
-
-
     var options = {
-        host: '127.0.0.1', // ÕâÀïÊÇ´úÀí·şÎñÆ÷       
-        port: 80, // ÕâÀïÊÇ´úÀí·şÎñÆ÷¶Ë¿Ú 
+        host: '192.168.99.251', // è¿™é‡Œæ˜¯ä»£ç†æœåŠ¡å™¨       
+        port: 80, // è¿™é‡Œæ˜¯ä»£ç†æœåŠ¡å™¨ç«¯å£ 
         path: url.parse(request.url).pathname,       
         method: request.method,
         headers: request.headers     
     };
 
-    var type = '';
-    var body = '';
-    //console.log(options)
-    http.request(options, function(req) {
-        type = req.headers['content-type'];
+
+
+    //console.log(options);
+    var hreq = http.request(options, function(req) {
+
         
+
         req.on('data', function(chunk) {
-          body += chunk;
-        }).on('end', function() {
-            if (type.indexOf('htm') > -1) {
-              //console.log(req);
-              
+
+            if (this.buffer || isHTML(this.headers['content-type'])) {
+                if (!this.buffer) this.buffer = new Buffer(0)
+                this.buffer = buffer_add(this.buffer, chunk);
             }
-            body = null;
+            else
+                response.write(chunk);
+            
+        })
+        req.on('end', function() {
+            if (this.buffer) {
+                response.write(this.buffer ? this.buffer.toString().replace('</body>', '<script>console.log("haha")</script></body>') : '');
+                this.buffer = null;
+            }
+            response.end();
         });
+
     	//console.log(arguments[0].req.pipe)
-        req.pipe(response); 
-        //console.log(req.url);
-    }).end();
+        
+
+        //req.pipe(response); 
+        
+    });
+    request.pipe(hreq);
+    /*if (request.method == 'POST') {
+        request.on('data', function(d) {
+            //console.log(d.toString());
+            hreq.write(d);
+            
+        })
+        request.on('end', function() {
+            hreq.end('\n');
+        })
+        request.pipe(hreq);
+    } else {
+        hreq.end();
+    }*/
+ 
+    
 }).listen(8000);
+
+
+/* 
+ * ä¸¤ä¸ªbufferå¯¹è±¡åŠ èµ·æ¥ 
+ */
+function buffer_add(buf1, buf2) {
+    var re = new Buffer(buf1.length + buf2.length);
+    buf1.copy(re);
+    buf2.copy(re, buf1.length);
+    return re;
+}
+
+function isHTML(contentType) {
+    return contentType ? contentType.indexOf('htm') > -1 ? true : false : false;
+}
+
+
+/* 
+ * ä»ç¼“å­˜ä¸­æ‰¾åˆ°å¤´éƒ¨ç»“æŸæ ‡è®°('\r\n\r\n')çš„ä½ç½® 
+ */
+function buffer_find_body(b) {
+    for (var i = 0, len = b.length - 3; i < len; i++) {
+        if (b[i] == 0x0d && b[i + 1] == 0x0a && b[i + 2] == 0x0d && b[i + 3] == 0x0a) {
+            return i + 4;
+        }
+    }
+    return -1;
+}

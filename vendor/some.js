@@ -1,7 +1,7 @@
 //https://gist.github.com/xurenlu/5714880
 
 var net = require('net');
-var local_port = 8893;
+var local_port = 8087;
 var intercept_rules = [];
 
 function test_rule(options){
@@ -32,7 +32,7 @@ function push(options){
 function clear(){
     intercept_rules=[];
 }
-push({host:"www.haosou.com",path:"http://www.haosou.com/?src=so.com",body:"is from /a",headers:{Server:"notNginx"}});
+//push({host:"192.168.99.251",body:"is from /a",headers:{Server:"notNginx"}});
 //在本地创建一个server监听本地local_port端口
 net.createServer(function(client) {
     //首先监听浏览器的数据发送事件，直到收到的数据包含完整的http请求头
@@ -54,7 +54,7 @@ net.createServer(function(client) {
             body = match_rule.body || "";
         }
         //var match_rule
-        console.log(match_rule);
+        //console.log(match_rule);
         if(match_rule){
             client.write("HTTP/1.1 200 OK\n");
             var headers = match_rule.headers||{};
@@ -69,12 +69,12 @@ net.createServer(function(client) {
             client.write(body);
             client.end("");
         }else{
-            relay_connection(req);
+            relay_connection(req, data);
         }
     });
     //从http请求头部取得请求信息后，继续监听浏览器发送数据，同时连接目标服务器，并把目标服务器的数据传给浏览器
-    function relay_connection(req) {
-        console.log(req.method + ' ' + req.host + ':' + req.port + ",path:" + req.path);
+    function relay_connection(req, data) {
+        console.log(req.method + ' ' + req.host + ':' + req.port + (req.path ? ",path:" + req.path : ''));
         //如果请求不是CONNECT方法（GET, POST），那么替换掉头部的一些东西
         if(req.method != 'CONNECT') {
             //先从buffer中取出头部
