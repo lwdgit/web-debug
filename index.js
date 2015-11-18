@@ -1,21 +1,43 @@
 #!/usr/bin/env node
-var tinyHttp = require('tiny-http');
-var File = require('./libs/file.js');
+var tinyHttp = require('tiny-http'),
+    reload = require('./libs/livereload'),
+    chokidar = require('chokidar');
+        
 
-tinyHttp.preHandle = function(req, res) {
-    if (require('url').parse(req.url).path === '/xloader.js') {
-        res.writeHead('200', 'text/javascript');
-        res.end(File.read(require('path').join(__dirname, 'vendor/xloader.js')));
-        return false;
-    }
+
+var AddHandler = function(host, port) {
+    tinyHttp.middleHandle = function(content, conf) {
+        if (conf.mime !== 'text/html') return content;
+        return content.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="http://' + host + ':' + port + '/livereload.js"></script>\r\n</body>');
+    };
 };
 
-tinyHttp.middleHandle = function(content, conf) {
-    return content.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="/xloader.js"></script>\r\n</body>');
-};
-//console.log(tinyHttp)
 var conf = tinyHttp.run(process.argv).conf;
-require('./libs/livereload').checkReload(conf.WEB_ROOT);
+
+var checkReload = function() {
+    reload.checkReload(function(err, host, port) {
+        //console.log(err, host, port);
+        AddHandler(host, port);
+    });
+};
+
+checkReload();
+
+
+chokidar.watch(conf.WEB_ROOT, {
+    usePolling: false,
+    persistent: true,
+    ignoreInitial: true
+})
+.on('add', checkReload)
+.on('change', checkReload)
+.on('unlink', checkReload)
+.on('unlinkDir', checkReload)
+.on('error', function(err) {
+    console.log(err.trace);
+});
+
+
 /*
 process.on('uncaughtException', function(e) {
     console.log(e.stack);

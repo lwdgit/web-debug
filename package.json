@@ -8,10 +8,10 @@
     "web-debug": "index.js"
   },
   "dependencies": {
-    "chokidar": "^1.0.3",
-    "debug": "~0.7.0",
-    "websocket.io-spec": "~0.2.1",
-    "livereload-protocol": "~0.2.2"
+    "chokidar": "1.2.0",
+    "livereload-server-spec": "0.2.3",
+    "portfinder": "0.4.0",
+    "tiny-http": ">=2.0.0"
   },
   "devDependencies": {},
   "scripts": {

@@ -2293,10 +2293,15 @@ var QRCode;
 
 
 (function() { //生成二维码
-    var ip = document.scripts[document.scripts.length - 1].src.match(/\/\/([^\:\/\\]+)/)[1];
-    var qrcodeEl = null;
+    var href = document.scripts[document.scripts.length - 1].src.match(/\/\/([^\:\/\\]+)\:?(\d+)?/),
+        ip = '127.0.0.1',
+        port = '8131';
+    if (href) {
+        ip = href[1];
+        port = href[2] || port;
+    }
 
-    function makeImg() {
+    function makeImg(qrcodeEl) {
         var qrcode = new QRCode(qrcodeEl, {
             width: 300, //设置宽高
             height: 300
@@ -2304,7 +2309,8 @@ var QRCode;
         qrcode.makeCode(top.location.href.replace('127.0.0.1', ip));
     }
 
-    function appendHtml(callback) {
+    function makeQRImg() {
+        var qrcodeEl = document.getElementById('__web-debug-QRCode');
         if (qrcodeEl) {
             if (qrcodeEl.style.display === 'block') {
                 qrcodeEl.style.display = 'none';
@@ -2314,24 +2320,25 @@ var QRCode;
             return;
         }
         qrcodeEl = document.createElement('div');
+        qrcodeEl.id = '__web-debug-QRCode';
         qrcodeEl.style.cssText = 'display: block;z-index: 10000000;position: fixed;top: 0; left: 0;width: 100%;height: 100%';
         document.getElementsByTagName('body')[0].appendChild(qrcodeEl);
-        makeImg();
+        makeImg(qrcodeEl);
     }
 
-    window.onkeyup = function(e) {
+    window.addEventListener('keyup', function(e) {
         if (e.keyCode === 90 && e.shiftKey && e.ctrlKey) { //ctrl + shift + z
-            appendHtml();
+            makeQRImg();
         }
-    };
+    }, false);
 
     function addDebugGap() {
         if (/(Mobile|Android|iPhone)/i.test(navigator.userAgent)) {
-          var script = document.createElement('script');
-          script.src = '//' + ip + ':8232/debuggap.min.js';
-          document.querySelector('body').appendChild(script); 
-          localStorage.setItem('host', ip);
-          localStorage.setItem('port', 1111);
+            var script = document.createElement('script');
+            script.src = 'http://' + ip + ':' + port + '/debuggap.min.js';
+            document.getElementsByTagName('body')[0].appendChild(script);
+            localStorage.setItem('host', ip);
+            localStorage.setItem('port', 1111);
         }
     }
     addDebugGap();
