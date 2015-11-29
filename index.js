@@ -38,6 +38,7 @@ var checkReload = function(path) {
 
 checkReload();
 
+function watch() {
 chokidar.watch(conf.WEB_ROOT + '/**', {
     usePolling: false,
     persistent: true,
@@ -48,3 +49,7 @@ chokidar.watch(conf.WEB_ROOT + '/**', {
 .on('error', function(err) {
     console.log(err);
 });
+}
+if (process.platform.indexOf('darwin') === -1) {
+    watch();
+}

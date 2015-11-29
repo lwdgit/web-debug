@@ -2338,7 +2338,7 @@ var QRCode;
             script.src = 'http://' + ip + ':' + port + '/debuggap.min.js';
             document.getElementsByTagName('body')[0].appendChild(script);
             localStorage.setItem('host', ip);
-            localStorage.setItem('port', 1111);
+            localStorage.setItem('port', 11111);
         }
     }
     addDebugGap();
