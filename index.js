@@ -50,6 +50,4 @@ chokidar.watch(conf.WEB_ROOT + '/**', {
     console.log(err);
 });
 }
-if (process.platform.indexOf('darwin') === -1) {
-    watch();
-}
+watch();
