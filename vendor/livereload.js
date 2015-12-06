@@ -1956,7 +1956,7 @@ var QRCode;
     })() : (function() { // Drawing in Canvas
         function _onMakeImage() {
             this._elImage.src = this._elCanvas.toDataURL("image/png");
-            this._elImage.style.display = "block";
+            this._elImage.style.display = "inline-block";
             this._elCanvas.style.display = "none";
         }
 
@@ -2321,7 +2321,7 @@ var QRCode;
         }
         qrcodeEl = document.createElement('div');
         qrcodeEl.id = '__web-debug-QRCode';
-        qrcodeEl.style.cssText = 'display: block;z-index: 10000000;position: fixed;top: 0; left: 0;width: 100%;height: 100%; box-sizing:border-box; padding: 10px';
+        qrcodeEl.style.cssText = 'display: block;z-index: 10000000;position: fixed;top: 0; left: 0;width: 100%;height: 100%; box-sizing:border-box; padding: 10px; text-aligin: center;';
         document.getElementsByTagName('body')[0].appendChild(qrcodeEl);
         makeImg(qrcodeEl);
     }

@@ -1,6 +1,6 @@
 {
   "name": "web-debug",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A static web server with liveload for web develop",
   "main": "index.js",
   "preferGlobal": true,
