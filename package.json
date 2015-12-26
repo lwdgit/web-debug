@@ -1,8 +1,8 @@
 {
   "name": "web-debug",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "A static web server with liveload for web develop",
-  "main": "index.js",
+  "main": "worker.js",
   "preferGlobal": true,
   "bin": {
     "web-debug": "index.js"
