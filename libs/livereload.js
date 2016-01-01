@@ -94,10 +94,13 @@ function makeLiveServer(callback) {
 
         process.stdout.write('LiveReload Server Listening at ' + port + '\n');
 
-        // fix mac livereload
-        process.on('uncaughtException', function(err) {
-            if (err.message !== 'read ECONNRESET') throw err;
+        LRServer.on('error', function() {
+            console.log('WebSocket error!');
         });
+        // fix mac livereload
+        /*process.on('uncaughtException', function(err) {
+            if (err.message !== 'read ECONNRESET') throw err;
+        });*/
 
 
         callback(null, LRServer, LRPORT);

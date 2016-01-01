@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
+var getOptions = require('./libs/getOptions');
 var hasStart = false,
     child;
 
-function start() {
-    child = require('child_process').fork('worker.js', process.argv.slice(2));
+
+
+function start(startArgs) {
+    child = require('child_process').fork('worker.js', startArgs);
     catchErr(child);
 
     setTimeout(function() {
@@ -12,7 +15,6 @@ function start() {
     }, 1000);
 }
 
-start();
 
 function catchErr(proc) {
     proc.on('unCaughtException', function(e) {
@@ -28,3 +30,27 @@ function catchErr(proc) {
         }
     });
 }
+
+
+function parseArgs() {
+    var options = getOptions(process.argv.slice(2));
+    if (options.h) {
+        console.log('Please visit https://github.com/lwdgit/web-debug');
+        return [];
+    }
+    var port = options.p || options.port || 8080,
+    root = options.r || options.root || process.cwd(),
+    autostart = options.A || options.autostart || '',
+    proxy = options.P || options.proxy || '',
+     args;
+    args = [port, root, autostart, proxy];
+    return args;
+}
+
+function init() {
+    var args = parseArgs();
+    if (!!args.length) {
+        start(args);
+    }
+}
+init();

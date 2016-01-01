@@ -34,7 +34,7 @@
 > web-debug -r ./htdocs -p 8080 --autostart
 ;开启服务器模式
 
-> web-debug -r ./htdocs -p 7777 --proxy --autostart
+> web-debug -r ./htdocs -p 7777 --proxy
 ;开启全局代理模式，可以调式任意页面
 ```
 
@@ -43,8 +43,8 @@
 
 -r, --root 静态服务器模式下为web根目录，代理模式下为watch目录
 -p, --port 静态服务器模式下为web启动端口，代理模式下为代理监听端口
---autostart 自动打开浏览器
---proxy     启用代理模式，默认为静态服务器模式
+-A, --autostart 自动打开浏览器
+-P, --proxy     启用代理模式，默认为静态服务器模式
 
 >  `ctrl+shift+z`可以显示二维码，方便手机应用（如微信）打开页面
 

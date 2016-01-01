@@ -2293,12 +2293,13 @@ var QRCode;
 
 
 (function() { //生成二维码
-    var href = document.scripts[document.scripts.length - 1].src.match(/\/\/([^\:\/\\]+)\:?(\d+)?/),
+    var href = document.scripts[document.scripts.length - 1].src.match(/\/\/([^\:\/\\]+)\:?(\d+)?.*\?(\d+)?/),
         ip = '127.0.0.1',
-        port = '8131';
+        port = '8132', port1 = '8133';
     if (href) {
         ip = href[1];
         port = href[2] || port;
+        port1 = href[3] || port1;
     }
 
     function makeImg(qrcodeEl) {
@@ -2341,5 +2342,12 @@ var QRCode;
             localStorage.setItem('port', 11111);
         }
     }
-    addDebugGap();
+    function addWeinre() {
+        var script = document.createElement('script');
+        script.src = 'http://' + ip + ':' + port1 + '/target/target-script-min.js?' + location.host + navigator.userAgent;
+        document.getElementsByTagName('body')[0].appendChild(script);
+    }
+    //addDebugGap();
+    addWeinre();
+    
 })();
