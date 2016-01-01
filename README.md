@@ -70,11 +70,11 @@ Dependencies:
 ==========
 
 ---
-"chokidar": "^1.3.0",
-"livereload-server-spec": "0.2.3",
-"portfinder": "0.4.0",
-"tiny-http": ">=2.0.0",
-"weinre": "*"
+chokidar: ^1.3.0
+livereload-server-spec: 0.2.3
+portfinder: 0.4.0
+tiny-http: >=2.0.0
+weinre: *
 ---
 
 
