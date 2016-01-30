@@ -7,7 +7,7 @@ var hasStart = false,
 
 
 function start(startArgs) {
-    child = require('child_process').fork('worker.js', startArgs);
+    child = require('child_process').fork(__dirname + '/worker.js', startArgs);
     catchErr(child);
 
     setTimeout(function() {

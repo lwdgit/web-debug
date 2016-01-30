@@ -28,7 +28,7 @@ function request(cReq, cRes) {
         cRes.writeHead(pRes.statusCode, pRes.headers);
         
         var bufferHelper = new BufferHelper(), headers;
-        if ((headers = pRes.headers['content-type']) && headers.indexOf('html') > 0 && /utf/i.test(headers)) {
+        if ((headers = pRes.headers['content-type']) && headers.indexOf('html') > 0 && !(/gb/i.test(headers))) {
           
         	
             pRes.on('data', function(chunk) {
