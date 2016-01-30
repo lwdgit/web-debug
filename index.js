@@ -42,8 +42,12 @@ function parseArgs() {
     root = options.r || options.root || process.cwd(),
     autostart = options.A || options.autostart || '',
     proxy = options.P || options.proxy || '',
-     args;
+    args;
     args = [port, root, autostart, proxy];
+
+    if (options.w || options.weinre) {//如果启用weinre
+        args.push(1);
+    }
     return args;
 }
 

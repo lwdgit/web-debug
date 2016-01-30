@@ -2,8 +2,7 @@ var tinyHttp = require('tiny-http'),
     chokidar = require('chokidar'),
     path = require('path'),
     reload = require('./libs/livereload'),
-    proxy = require('./proxy'),
-    weinre = require('./libs/weinre');
+    proxy = require('./proxy'),weinreport;
 
 var debugType = 'proxy';// server or proxy
 var hasStart = false;
@@ -15,8 +14,10 @@ function init() {
     //console.log(process.argv);
     port = process.argv[2];
     webroot = process.argv[3];
-
     debugType = process.argv[5]? 'proxy' : 'server';
+    if (process.argv[6]) {
+        weinreport = require('./weinre').port;
+    }
     
     webroot = path.resolve(webroot);
 
@@ -29,7 +30,8 @@ function AddHandler(lhost, lport) {
         if (debugType === 'server') {
             tinyHttp.run(process.argv);
         } else {
-            proxy.start(port, '<script type="text/javascript" charset="utf-8" src="http://' + lhost + ':' + lport + '/livereload.js?"' + weinre.port + '></script>\r\n</body>');
+            console.log('Watch directory: ' + webroot);
+            proxy.start(port, '<script type="text/javascript" charset="utf-8" src="http://' + lhost + ':' + lport + '/livereload.js' + (weinreport ? '?weinreport=' + weinreport : '') + '"></script>\r\n</body>');
         }
         hasStart = true;
     }
@@ -56,7 +58,6 @@ function throttle(fn, timeout) {
         }.bind(this), timeout || 300);
     };
 }
-
 
 
 function checkReload(path) {

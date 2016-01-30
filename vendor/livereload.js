@@ -515,8 +515,29 @@
                 return this.reloadPage();
             };
 
+            var timeout = false, tickId;
+            var reload = function(e) {
+                if (!timeout) {
+                    location.reload();
+                }
+            }, reloadPage;
+            
+            if ('ondeviceorientation' in window) {
+                reloadPage = function() {
+                    timeout = false;
+                    clearTimeout(tickId);
+                    tickId = setTimeout(function() {
+                        timeout = true;
+                    }, 300);
+                    window.removeEventListener('deviceorientation', reload, false);
+                    window.addEventListener('deviceorientation', reload, false);
+                };      
+            } else {
+                reloadPage = reload;    
+            }
+
             Reloader.prototype.reloadPage = function() {
-                return this.window.document.location.reload();
+                return reloadPage && reloadPage();
             };
 
             Reloader.prototype.reloadImages = function(path) {
@@ -2293,13 +2314,13 @@ var QRCode;
 
 
 (function() { //生成二维码
-    var href = document.scripts[document.scripts.length - 1].src.match(/\/\/([^\:\/\\]+)\:?(\d+)?.*\?(\d+)?/),
+    var href = document.scripts[document.scripts.length - 1].src;
+        arr = href.match(/\/\/([^\:\/\\]+)\:?(\d+)?/),
         ip = '127.0.0.1',
-        port = '8132', port1 = '8133';
-    if (href) {
-        ip = href[1];
-        port = href[2] || port;
-        port1 = href[3] || port1;
+        port = '8132';
+    if (arr) {
+        ip = arr[1];
+        port = arr[2] || port;
     }
 
     function makeImg(qrcodeEl) {
@@ -2342,12 +2363,18 @@ var QRCode;
             localStorage.setItem('port', 11111);
         }
     }
-    function addWeinre() {
+    function addWeinre(port) {
         var script = document.createElement('script');
-        script.src = 'http://' + ip + ':' + port1 + '/target/target-script-min.js?' + location.host + navigator.userAgent;
+        script.src = 'http://' + ip + ':' + port + '/target/target-script-min.js?' + location.host + navigator.userAgent;
         document.getElementsByTagName('body')[0].appendChild(script);
     }
-    //addDebugGap();
-    addWeinre();
+
+    if (/weinreport=(\d+)/.test(href)) {
+        addWeinre(RegExp.$1);
+    } else {
+        addDebugGap();
+    }
+    
+    
     
 })();

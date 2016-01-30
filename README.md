@@ -45,6 +45,7 @@
 	-p, --port 静态服务器模式下为web启动端口，代理模式下为代理监听端口
 	-A, --autostart 自动打开浏览器
 	-P, --proxy     启用代理模式，默认为静态服务器模式
+	-w, --weinre    启用weinre，默认使用debuggap
 
 >  `ctrl+shift+z`可以显示二维码，方便手机应用（如微信）打开页面
 

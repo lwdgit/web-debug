@@ -5,6 +5,7 @@
 var http = require('http');
 var net = require('net');
 var url = require('url');
+var BufferHelper = require('./libs/bufferhelper');
 
 var httpInstance, InjectScript;
 
@@ -26,17 +27,18 @@ function request(cReq, cRes) {
        
         cRes.writeHead(pRes.statusCode, pRes.headers);
         
-        var chunk = '';
-        if (pRes.headers['content-type'] && pRes.headers['content-type'].indexOf('html') > 0) {
+        var bufferHelper = new BufferHelper(), headers;
+        if ((headers = pRes.headers['content-type']) && headers.indexOf('html') > 0 && /utf/i.test(headers)) {
           
-        	//console.log(pRes.headers);
-            pRes.on('data', function(data) {
-        		chunk+=data;
+        	
+            pRes.on('data', function(chunk) {
+        		bufferHelper.concat(chunk);
         	});
         	pRes.on('end', function() {
-                //cRes.end(chunk);
-                //console.log(chunk);
-        		cRes.end(chunk.toString().replace(/<\/body>/, InjectScript + '<\/body>'));
+                //cRes.end(bufferHelper.toBuffer().toString());
+                //console.log(pRes.headers);
+        		cRes.end(bufferHelper.toBuffer().toString().replace(/<\/body>/, InjectScript + '<\/body>'));
+                delete bufferhelper;
         	});
             return;
         }
