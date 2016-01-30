@@ -16,7 +16,7 @@ function init() {
     webroot = process.argv[3];
     debugType = process.argv[5]? 'proxy' : 'server';
     if (process.argv[6]) {
-        weinreport = require('./weinre').port;
+        weinreport = require('./libs/weinre').port;
     }
     
     webroot = path.resolve(webroot);

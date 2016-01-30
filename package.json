@@ -1,6 +1,6 @@
 {
   "name": "web-debug",
-  "version": "2.0.3",
+  "version": "2.0.3alpha",
   "description": "A static web server with liveload for web develop",
   "main": "worker.js",
   "preferGlobal": true,
@@ -12,6 +12,7 @@
     "livereload-server-spec": "0.2.3",
     "portfinder": "0.4.0",
     "tiny-http": ">=2.0.0",
+    "hateip": "^1.0.4",
     "weinre": "*"
   },
   "devDependencies": {},

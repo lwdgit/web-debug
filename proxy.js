@@ -28,7 +28,7 @@ function request(cReq, cRes) {
         cRes.writeHead(pRes.statusCode, pRes.headers);
         
         var bufferHelper = new BufferHelper(), headers;
-        if ((headers = pRes.headers['content-type']) && headers.indexOf('html') > 0 && /utf/i.test(headers)) {
+        if ((headers = pRes.headers['content-type']) && headers.indexOf('html') > 0 && !(/gb/i.test(headers))) {
           
         	
             pRes.on('data', function(chunk) {
@@ -38,7 +38,7 @@ function request(cReq, cRes) {
                 //cRes.end(bufferHelper.toBuffer().toString());
                 //console.log(pRes.headers);
         		cRes.end(bufferHelper.toBuffer().toString().replace(/<\/body>/, InjectScript + '<\/body>'));
-                delete bufferhelper;
+                bufferhelper = null;
         	});
             return;
         }
@@ -81,7 +81,7 @@ var start = exports.start = function(port, script) {
 	InjectScript = script || '<script>console.log("%cInject Success!","font-size:40px");</script>';
 	console.log('Proxy listen at:' + port);
     httpInstance.on('error', function(e) {
-        console.log('error');
+        console.log('error: ', e.stack || e);
     });
 };
 

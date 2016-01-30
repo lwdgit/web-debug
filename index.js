@@ -48,6 +48,9 @@ function parseArgs() {
     if (options.w || options.weinre) {//如果启用weinre
         args.push(1);
     }
+    if (options.n || options.name) {
+        require('./libs/hateip').init(options.n || options.name);
+    }
     return args;
 }
 
