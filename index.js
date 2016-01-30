@@ -39,14 +39,17 @@ function parseArgs() {
         return [];
     }
     var port = options.p || options.port || 8080,
-    root = options.r || options.root || process.cwd(),
     autostart = options.A || options.autostart || '',
     proxy = options.P || options.proxy || '',
+    root = options.r || options.root || '',
     args;
     args = [port, root, autostart, proxy];
 
     if (options.w || options.weinre) {//如果启用weinre
         args.push(1);
+    }
+    if (options.n || options.name) {
+        require('./libs/hateip').init(options.n || options.name);
     }
     return args;
 }
