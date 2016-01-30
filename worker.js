@@ -43,7 +43,7 @@ function AddHandler(lhost, lport) {
 
     tinyHttp.middleHandle = function(content, conf) {
         if (conf.mime !== 'text/html') return content;
-        return content.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="http://' + lhost + ':' + lport + '/livereload.js"' + weinre.port + '></script>\r\n</body>');
+        return content.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="http://' + lhost + ':' + lport + '/livereload.js"' + weinreport + '></script>\r\n</body>');
     };
 
 }
