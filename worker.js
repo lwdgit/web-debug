@@ -15,6 +15,11 @@ function init() {
     port = process.argv[2];
     webroot = process.argv[3];
     debugType = process.argv[5]? 'proxy' : 'server';
+
+	if (debugType === 'proxy' && !webroot) {
+		webroot =  __dirname + '/vendor';	
+	}
+
     if (process.argv[6]) {
         weinreport = require('./libs/weinre').port;
     }
@@ -70,7 +75,6 @@ function checkReload(path) {
 
 function watch() {
     chokidar.watch(webroot + '/**', {
-            usePolling: false,
             persistent: true,
             ignoreInitial: true,
             ignorePermissionErrors: true

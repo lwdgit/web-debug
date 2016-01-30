@@ -7,7 +7,7 @@ var hasStart = false,
 
 
 function start(startArgs) {
-    child = require('child_process').fork('worker.js', startArgs);
+    child = require('child_process').fork(__dirname + '/worker.js', startArgs);
     catchErr(child);
 
     setTimeout(function() {
@@ -39,9 +39,9 @@ function parseArgs() {
         return [];
     }
     var port = options.p || options.port || 8080,
-    root = options.r || options.root || process.cwd(),
     autostart = options.A || options.autostart || '',
     proxy = options.P || options.proxy || '',
+    root = options.r || options.root || '',
     args;
     args = [port, root, autostart, proxy];
 

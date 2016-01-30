@@ -1,6 +1,6 @@
 {
   "name": "web-debug",
-  "version": "2.0.4-dev",
+  "version": "2.0.4dev",
   "description": "A static web server with liveload for web develop",
   "main": "worker.js",
   "preferGlobal": true,
