@@ -56,8 +56,8 @@ function makeLiveServer(callback) {
         var LiveReloadServer = require('livereload-server-spec');
 
         LRServer = new LiveReloadServer({
-            id: 'com.baidu.fis',
-            name: 'fis-reload',
+            id: 'livereload-server',
+            name: 'reload',
             version: require('../package.json').version,
             port: port,
             protocols: {
@@ -74,7 +74,7 @@ function makeLiveServer(callback) {
             });
             res.end(script);
         });
-        
+
         LRServer.on('httprequest', function(url, req, res) {
             var script = fs.readFileSync(__dirname + '/../vendor' + url.pathname);
             res.writeHead(200, {
@@ -83,6 +83,9 @@ function makeLiveServer(callback) {
                 'Connection': 'close'
             });
             res.end(script);
+        });
+        LRServer.on('error', function(err) {
+            console.log(err.stack || err);
         });
 
         LRServer.listen(function(err) {
@@ -110,7 +113,7 @@ function makeLiveServer(callback) {
 function reload(callback) {
     makeLiveServer(function(error, server, port) {
         if (error) {
-            return callback(error);
+            return callback(error.stack || error);
         }
 
         if (server && server.connections) {
@@ -139,4 +142,7 @@ function checkReload(next) {
 }
 
 exports.checkReload = checkReload;
-
+process.on('uncaughtException', function(err) {
+    //不处理异常
+    console.trace(err.message || err.stack || err);
+});

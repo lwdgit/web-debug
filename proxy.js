@@ -14,37 +14,34 @@ function request(cReq, cRes) {
     var u = url.parse(cReq.url);
 
     var options = {
-        hostname : u.hostname, 
-        port     : u.port || 80,
-        path     : u.path,       
-        method   : cReq.method,
-        headers  : cReq.headers
+        hostname: u.hostname,
+        port: u.port || 80,
+        path: u.path,
+        method: cReq.method,
+        headers: cReq.headers
     };
     delete cReq.headers['accept-encoding'];
     //删除支持gzip声明，防止服务器将代码压缩
-    
+
     var pReq = http.request(options, function(pRes) {
-       
+
         cRes.writeHead(pRes.statusCode, pRes.headers);
-        
-        var bufferHelper = new BufferHelper(), headers;
-        if ((headers = pRes.headers['content-type']) && headers.indexOf('html') > 0 && !(/gb/i.test(headers))) {
-          
-        	
+
+        var bufferHelper = new BufferHelper(),
+            headers;
+        if ((headers = pRes.headers['content-type']) && headers.indexOf('html') > 0 && (/ut/i.test(headers))) {
             pRes.on('data', function(chunk) {
-        		bufferHelper.concat(chunk);
-        	});
-        	pRes.on('end', function() {
-                //cRes.end(bufferHelper.toBuffer().toString());
-                //console.log(pRes.headers);
-        		cRes.end(bufferHelper.toBuffer().toString().replace(/<\/body>/, InjectScript + '<\/body>'));
+                bufferHelper.concat(chunk);
+            });
+            pRes.on('end', function() {
+                cRes.end(bufferHelper.toBuffer().toString().replace(/<\/body>/, InjectScript + '<\/body>'));
                 bufferhelper = null;
-        	});
+            });
             return;
         }
 
         pRes.pipe(cRes);
-           
+
     }).on('error', function(e) {
         console.log('request "' + cReq.url + '" error!');
         cRes.writeHead(404);
@@ -61,11 +58,11 @@ function connect(req, socket) {
         port = url[1];
     } else {
         port = 80;
-    } 
+    }
     host = url[0];
 
     var mediator = net.createConnection(port, host);
-    mediator.on('connect', function () {
+    mediator.on('connect', function() {
         //console.log('connected %s', req.url);
         socket.write("HTTP/1.1 200 Connection established\r\n\r\n");
     });
@@ -77,20 +74,17 @@ function connect(req, socket) {
 }
 
 var start = exports.start = function(port, script) {
-	httpInstance = http.createServer(request).on('connect', connect).listen((port=port || 7777), '0.0.0.0');
-	InjectScript = script || '<script>console.log("%cInject Success!","font-size:40px");</script>';
-	console.log('Proxy listen at:' + port);
+    httpInstance = http.createServer(request).on('connect', connect).listen((port = port || 7777), '0.0.0.0');
+    InjectScript = script || '<script>console.log("%cInject Success!","font-size:40px");</script>';
+    console.log('Proxy listen at:' + port);
     httpInstance.on('error', function(e) {
         console.log('error: ', e.stack || e);
     });
 };
 
 exports.stop = function() {
-	if (httpInstance) {
-		httpInstance.stopServer();
-		httpInstance = null;
-	}
+    if (httpInstance) {
+        httpInstance.stopServer();
+        httpInstance = null;
+    }
 };
-
-
-

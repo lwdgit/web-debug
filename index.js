@@ -2,7 +2,7 @@
 
 var getOptions = require('./libs/getOptions');
 var hasStart = false,
-    child;
+    child, startArgs;
 
 
 
@@ -15,19 +15,26 @@ function start(startArgs) {
     }, 1000);
 }
 
+function restart(e, delay) {
+    console.log(e);
+    if (hasStart) {
+        console.log('Restarting...');
+        hasStart = false;
+        setTimeout(function() {
+            start(startArgs);
+        }, delay || 3000);
+    } else {
+        console.log('Please check the error info...');
+        process.exit(0);
+    }
+}
 
 function catchErr(proc) {
-    proc.on('unCaughtException', function(e) {
-        console.log(e.stack);
-        if (hasStart) {
-            console.log('Caught Exception, auto restarting...');
-            child.exit(0);
-            hasStart = false;
-            setTimeout(start, 5000);
-        } else {
-            console.log('Please check the error info...');
-            process.exit(0);
-        }
+    proc.on('exit', function(e) {
+        restart(e, /^\d+$/.test(e) ? 100 : 3000);
+    });
+    proc.on('uncaughtException', function(e) {
+        restart(e);
     });
 }
 
@@ -39,13 +46,13 @@ function parseArgs() {
         return [];
     }
     var port = options.p || options.port || 8080,
-    autostart = options.A || options.autostart || '',
-    proxy = options.P || options.proxy || '',
-    root = options.r || options.root || '',
-    args;
+        autostart = options.A || options.autostart || '',
+        proxy = options.P || options.proxy || '',
+        root = options.r || options.root || '',
+        args;
     args = [port, root, autostart, proxy];
 
-    if (options.w || options.weinre) {//如果启用weinre
+    if (options.w || options.weinre) { //如果启用weinre
         args.push(1);
     }
     if (options.n || options.name) {
@@ -55,9 +62,9 @@ function parseArgs() {
 }
 
 function init() {
-    var args = parseArgs();
-    if (!!args.length) {
-        start(args);
+    startArgs = parseArgs();
+    if (!!startArgs.length) {
+        start(startArgs);
     }
 }
 init();

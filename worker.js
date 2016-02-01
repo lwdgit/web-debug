@@ -2,28 +2,29 @@ var tinyHttp = require('tiny-http'),
     chokidar = require('chokidar'),
     path = require('path'),
     reload = require('./libs/livereload'),
-    proxy = require('./proxy'),weinreport;
+    proxy = require('./proxy'),
+    weinreport;
 
-var debugType = 'proxy';// server or proxy
+var debugType = 'proxy'; // server or proxy
 var hasStart = false;
 
 var port, webroot;
 
 function init() {
-    
+
     //console.log(process.argv);
     port = process.argv[2];
     webroot = process.argv[3];
-    debugType = process.argv[5]? 'proxy' : 'server';
+    debugType = process.argv[5] ? 'proxy' : 'server';
 
-	if (debugType === 'proxy' && !webroot) {
-		webroot =  __dirname + '/vendor';	
-	}
+    if (debugType === 'proxy' && !webroot) {
+        webroot = __dirname + '/vendor';
+    }
 
     if (process.argv[6]) {
         weinreport = require('./libs/weinre').port;
     }
-    
+
     webroot = path.resolve(webroot);
 
     checkReload();
@@ -43,7 +44,7 @@ function AddHandler(lhost, lport) {
 
     tinyHttp.middleHandle = function(content, conf) {
         if (conf.mime !== 'text/html') return content;
-        return content.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="http://' + lhost + ':' + lport + '/livereload.js"' + weinreport + '></script>\r\n</body>');
+        return content.toString().replace(/<\/body>/i, '<script type="text/javascript" charset="utf-8" src="http://' + lhost + ':' + lport + '/livereload.js' + (weinreport ? '?weinreport=' + weinreport : '') + '"></script>\r\n</body>');
     };
 
 }
@@ -67,7 +68,6 @@ function throttle(fn, timeout) {
 
 function checkReload(path) {
     reload.checkReload(function(err, host, port) {
-        //console.log(err, host, port);
         AddHandler(host, port);
     }, path);
 }
@@ -86,8 +86,3 @@ function watch() {
 }
 
 init();
-
-/*process.on('unCaughtException', function(e) {
-    console.log('Caught Exception:\n');
-    console.log(e.stack);
-});*/
